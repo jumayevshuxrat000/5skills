@@ -74,13 +74,13 @@ export default function Navbar() {
           {/* Profile Avatar (theme button dan keyin) */}
           <button
             onClick={() => navigate("/profile")}
-            className="h-10 w-10 rounded-full overflow-hidden transition
+            className="h-10 w-10 cursor-pointer rounded-full overflow-hidden transition
                        border border-slate-200 hover:ring-2 hover:ring-blue-200
                        dark:border-white/10 dark:hover:ring-blue-400/30"
             title="Profile"
           >
             <div
-              className="h-full w-full grid place-items-center font-semibold
+              className="h-full w-full rounded-full grid place-items-center font-semibold
                             bg-slate-200 text-slate-600
                             dark:bg-white/10 dark:text-white"
             >
@@ -91,8 +91,8 @@ export default function Navbar() {
           {/* Logout */}
           <button
             onClick={logout}
-            className="px-3 h-10 rounded-lg transition
-                       bg-slate-900 text-white hover:opacity-90
+            className="px-3 h-10 cursor-pointer rounded-lg transition
+                       bg-slate-300 text-white hover:opacity-90
                        dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
           >
             Logout
