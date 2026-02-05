@@ -2,37 +2,33 @@ import { apiFetch } from "./api";
 
 const ENDPOINT = "/user";
 
-/**
- * REGISTER
- * - email mavjudligini tekshiradi
- * - yangi user yaratadi
- */
-export async function registerUser({ name, email, password }) {
-  const existing = await apiFetch(
-    `${ENDPOINT}?email=${encodeURIComponent(email)}`,
+// ✅ Query ishlamagani uchun: hammasini olib, o'zimiz filter qilamiz
+async function fetchAllUsersSafe() {
+  const list = await apiFetch(ENDPOINT); // <-- bu querysiz ishlaydi
+  return Array.isArray(list) ? list : [];
+}
+
+async function findByEmail(email) {
+  const list = await fetchAllUsersSafe();
+  const target = (email || "").toLowerCase().trim();
+  return (
+    list.find((u) => (u?.email || "").toLowerCase().trim() === target) || null
   );
+}
 
-  if (Array.isArray(existing) && existing.length > 0) {
-    throw new Error("This email is already registered.");
-  }
+export async function registerUser({ name, email, password }) {
+  const existing = await findByEmail(email);
+  if (existing) throw new Error("This email is already registered.");
 
+  // create
   return apiFetch(ENDPOINT, {
     method: "POST",
     body: JSON.stringify({ name, email, password }),
   });
 }
 
-/**
- * LOGIN
- * - email orqali user topadi
- * - password tekshiradi
- */
 export async function loginUser({ email, password }) {
-  const found = await apiFetch(
-    `${ENDPOINT}?email=${encodeURIComponent(email)}`,
-  );
-
-  const user = Array.isArray(found) ? found[0] : null;
+  const user = await findByEmail(email);
 
   if (!user) throw new Error("User not found.");
   if (user.password !== password) throw new Error("Wrong password.");
@@ -40,15 +36,9 @@ export async function loginUser({ email, password }) {
   return user;
 }
 
-export async function getUserById(id) {
-  if (!id) throw new Error("User ID is required.");
-  return apiFetch(`${ENDPOINT}/${id}`);
-}
-
 export async function validateSession(localUser) {
-  if (!localUser?.id) {
-    throw new Error("No local user session.");
-  }
-
-  return getUserById(localUser.id);
+  if (!localUser?.id) throw new Error("No session");
+  const fresh = await apiFetch(`${ENDPOINT}/${localUser.id}`);
+  if (!fresh?.id) throw new Error("Session invalid");
+  return fresh;
 }
