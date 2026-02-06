@@ -1,3 +1,76 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+   Global Glass Scrollbar
+   ========================= */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+/* Chrome / Edge / Safari */
+::-webkit-scrollbar {
+  width: 10px; /* vertikal */
+  height: 10px; /* gorizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  /* glass look */
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* "blur" vibe (Safari works best) */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* make it slimmer visually */
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Optional: corner for textarea / code blocks */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ✅ Dark mode da yanada chiroyli bo‘lishi uchun */
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* ✅ Light mode (ko‘zga yoqimli) */
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.1); /* slate-900-ish */
+  border-color: rgba(15, 23, 42, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.16);
+}

@@ -2,9 +2,8 @@ import { apiFetch } from "./api";
 
 const ENDPOINT = "/user";
 
-// ✅ Query ishlamagani uchun: hammasini olib, o'zimiz filter qilamiz
 async function fetchAllUsersSafe() {
-  const list = await apiFetch(ENDPOINT); // <-- bu querysiz ishlaydi
+  const list = await apiFetch(ENDPOINT); 
   return Array.isArray(list) ? list : [];
 }
 
@@ -23,7 +22,7 @@ export async function registerUser({ name, email, password }) {
   // create
   return apiFetch(ENDPOINT, {
     method: "POST",
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({ name, email, password }),      
   });
 }
 

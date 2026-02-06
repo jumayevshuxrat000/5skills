@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { authStorage } from "../../services/auth.storage";
 import Logo from "../../assets/5skilsspng.png";
 import { useTheme } from "../../hooks/useTheme";
+import { Star } from "lucide-react";
 
 const linkBase =
   "px-3 py-2 rounded-lg font-medium transition " +
@@ -27,8 +28,8 @@ export default function Navbar() {
       <div className="h-16 px-6 flex items-center justify-between">
         {/* Left: logo */}
         <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-xl bg-blue-600 grid place-items-center text-white font-bold overflow-hidden">
-            <img src={Logo} alt="5Skills Examer Logo" className="h-8 w-8" />
+          <div className="h-10 w-10 rounded-xl bg-blue-600 grid place-items-center text-white font-bold overflow-hidden">
+            <img src={Logo} alt="5Skills Examer Logo" className="h-10 w-10" />
           </div>
 
           <div className="font-semibold text-blue-600 dark:text-blue-400 text-lg">
@@ -47,7 +48,6 @@ export default function Navbar() {
           <NavItem to="/profile" label="Profile" />
         </nav>
 
-        {/* Right: stars + theme + avatar + logout */}
         <div className="flex items-center gap-3">
           {/* Stars pill */}
           <div
@@ -55,7 +55,7 @@ export default function Navbar() {
                           bg-amber-100 text-amber-800 border border-amber-200
                           dark:bg-amber-300/10 dark:text-amber-200 dark:border-amber-300/20"
           >
-            <span>⭐</span>
+            <Star className="h-5 w-5" />
             <span className="font-semibold">0</span>
           </div>
 
